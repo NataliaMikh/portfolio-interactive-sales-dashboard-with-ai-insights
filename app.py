@@ -6,8 +6,6 @@ import os
 from dotenv import load_dotenv
 import matplotlib.pyplot as plt
 import seaborn as sns
-import ssl
-import streamlit as st
 import pandas as pd
 import ssl
 
@@ -54,24 +52,41 @@ def load_default_data():
     return pd.concat(dataframes.values(), ignore_index=True)
 
 # Main function defining the application
-def main():
-    # Checking if data is already loaded
-    if 'df' not in st.session_state:
-        st.session_state.df = load_default_data()
-        st.session_state.data_uploaded = False
+def load_default_data():
+    # Paths to default data
+    default_btn_path = 'default_Site-BTN_Sales_History.CSV'
+    default_dor_path = 'default_Site-DOR_Sales_History.CSV'
+    default_tor_path = 'default_Site-TOR_Sales_History.CSV'
 
-    # Creating tabs for the application
+    # Load data
+    df_btn = pd.read_csv(default_btn_path, encoding='ISO-8859-1', low_memory=False)
+    df_dor = pd.read_csv(default_dor_path, encoding='ISO-8859-1', low_memory=False)
+    df_tor = pd.read_csv(default_tor_path, encoding='ISO-8859-1', low_memory=False)
+
+    df_btn['Site'] = 'BTN'
+    df_dor['Site'] = 'DOR'
+    df_tor['Site'] = 'TOR'
+
+    df = pd.concat([df_btn, df_dor, df_tor], ignore_index=True)
+    return df
+
+def main():
+    if 'data_uploaded' not in st.session_state or not st.session_state.data_uploaded:
+        df = load_default_data()
+        st.session_state.df = df
+        st.session_state.data_uploaded = True  # Mark as data uploaded
+
     tabs = st.tabs(["1.Load Your Data", "2.Dashboard", "3. Generate AI Insights"])
 
-    # Tab for data loading
     with tabs[0]:
-        st.markdown("<h3 style='font-size:20px;color: #164871'>Upload Files </h3>", unsafe_allow_html=True)
-
-        # File uploaders
+        st.markdown("<h3 style='font-size:20px;color: #164871'>Upload Updated Sales Data </h3>", unsafe_allow_html=True)
         col1, col2, col3 = st.columns(3)
-        uploaded_btn = col1.file_uploader("Upload Site-BTN Sales History CSV", type="csv")
-        uploaded_dor = col2.file_uploader("Upload Site-DOR Sales History CSV", type="csv")
-        uploaded_tor = col3.file_uploader("Upload Site-TOR Sales History CSV", type="csv")
+        with col1:
+            uploaded_btn = st.file_uploader("Upload Site-BTN Sales History CSV", type="csv")
+        with col2:
+            uploaded_dor = st.file_uploader("Upload Site-DOR Sales History CSV", type="csv")
+        with col3:
+            uploaded_tor = st.file_uploader("Upload Site-TOR Sales History CSV", type="csv")
 
         if st.button("Submit"):
             if uploaded_btn and uploaded_dor and uploaded_tor:
@@ -79,21 +94,16 @@ def main():
                 df_dor = pd.read_csv(uploaded_dor, encoding='ISO-8859-1', low_memory=False)
                 df_tor = pd.read_csv(uploaded_tor, encoding='ISO-8859-1', low_memory=False)
 
-                # Assigning sites
                 df_btn['Site'] = 'BTN'
                 df_dor['Site'] = 'DOR'
                 df_tor['Site'] = 'TOR'
 
-                # Concatenating the uploaded data
-                st.session_state.df = pd.concat([df_btn, df_dor, df_tor], ignore_index=True)
+                df = pd.concat([df_btn, df_dor, df_tor], ignore_index=True)
+                st.session_state.df = df
                 st.session_state.data_uploaded = True
                 st.success("Data uploaded and combined successfully!")
             else:
-                missing_files = []
-                if not uploaded_btn: missing_files.append("BTN")
-                if not uploaded_dor: missing_files.append("DOR")
-                if not uploaded_tor: missing_files.append("TOR")
-                st.error(f"Please upload all required CSV files. Missing: {', '.join(missing_files)}")
+                st.error("Please upload all three CSV files.")
 
 
     # Tab 2: Dashboard
