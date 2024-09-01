@@ -37,21 +37,28 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # Fixed title for the dashboard
-st.markdown('<div class="fixed-title">Sales Analytics Dashboard</div>', unsafe_allow_html=True)
+st.markdown('<div class="fixed-title">Sales Analytics Dashboard</div>',
+            unsafe_allow_html=True)
 
 # Function to load default data
+
+
 def load_default_data():
     paths = {
         'BTN': 'https://raw.githubusercontent.com/NGravereaux/interactive-sales-dashboard-with-ai-insights/main/default_Site-BTN_Sales_History.CSV',
         'DOR': 'https://raw.githubusercontent.com/NGravereaux/interactive-sales-dashboard-with-ai-insights/main/default_Site-DOR_Sales_History.CSV',
         'TOR': 'https://raw.githubusercontent.com/NGravereaux/interactive-sales-dashboard-with-ai-insights/main/default_Site-TOR_Sales_History.CSV'
     }
-    dataframes = {site: pd.read_csv(path, encoding='ISO-8859-1', low_memory=False) for site, path in paths.items()}
+    dataframes = {site: pd.read_csv(
+        path, encoding='ISO-8859-1', low_memory=False) for site, path in paths.items()}
     for site, df in dataframes.items():
         df['Site'] = site
     return pd.concat(dataframes.values(), ignore_index=True)
 
 # Main function defining the application
+
+
+@st.cache_data(show_spinner=True)
 def load_default_data():
     # Paths to default data
     default_btn_path = 'default_Site-BTN_Sales_History.CSV'
@@ -59,9 +66,12 @@ def load_default_data():
     default_tor_path = 'default_Site-TOR_Sales_History.CSV'
 
     # Load data
-    df_btn = pd.read_csv(default_btn_path, encoding='ISO-8859-1', low_memory=False)
-    df_dor = pd.read_csv(default_dor_path, encoding='ISO-8859-1', low_memory=False)
-    df_tor = pd.read_csv(default_tor_path, encoding='ISO-8859-1', low_memory=False)
+    df_btn = pd.read_csv(
+        default_btn_path, encoding='ISO-8859-1', low_memory=False)
+    df_dor = pd.read_csv(
+        default_dor_path, encoding='ISO-8859-1', low_memory=False)
+    df_tor = pd.read_csv(
+        default_tor_path, encoding='ISO-8859-1', low_memory=False)
 
     df_btn['Site'] = 'BTN'
     df_dor['Site'] = 'DOR'
@@ -70,29 +80,38 @@ def load_default_data():
     df = pd.concat([df_btn, df_dor, df_tor], ignore_index=True)
     return df
 
+
 def main():
     if 'data_uploaded' not in st.session_state or not st.session_state.data_uploaded:
         df = load_default_data()
         st.session_state.df = df
         st.session_state.data_uploaded = True  # Mark as data uploaded
 
-    tabs = st.tabs(["1.Load Your Data", "2.Dashboard", "3. Generate AI Insights"])
+    tabs = st.tabs(["1.Load Updated Data", "2.Dashboard",
+                   "3. Generate AI Insights"])
 
     with tabs[0]:
-        st.markdown("<h3 style='font-size:20px;color: #164871'>Upload Updated Sales Data </h3>", unsafe_allow_html=True)
+        st.markdown(
+            "<h3 style='font-size:20px;color: #164871'>Load Updated Sales Data </h3>", unsafe_allow_html=True)
         col1, col2, col3 = st.columns(3)
         with col1:
-            uploaded_btn = st.file_uploader("Upload Site-BTN Sales History CSV", type="csv")
+            uploaded_btn = st.file_uploader(
+                "Upload Site-BTN Sales History CSV", type="csv")
         with col2:
-            uploaded_dor = st.file_uploader("Upload Site-DOR Sales History CSV", type="csv")
+            uploaded_dor = st.file_uploader(
+                "Upload Site-DOR Sales History CSV", type="csv")
         with col3:
-            uploaded_tor = st.file_uploader("Upload Site-TOR Sales History CSV", type="csv")
+            uploaded_tor = st.file_uploader(
+                "Upload Site-TOR Sales History CSV", type="csv")
 
         if st.button("Submit"):
             if uploaded_btn and uploaded_dor and uploaded_tor:
-                df_btn = pd.read_csv(uploaded_btn, encoding='ISO-8859-1', low_memory=False)
-                df_dor = pd.read_csv(uploaded_dor, encoding='ISO-8859-1', low_memory=False)
-                df_tor = pd.read_csv(uploaded_tor, encoding='ISO-8859-1', low_memory=False)
+                df_btn = pd.read_csv(
+                    uploaded_btn, encoding='ISO-8859-1', low_memory=False)
+                df_dor = pd.read_csv(
+                    uploaded_dor, encoding='ISO-8859-1', low_memory=False)
+                df_tor = pd.read_csv(
+                    uploaded_tor, encoding='ISO-8859-1', low_memory=False)
 
                 df_btn['Site'] = 'BTN'
                 df_dor['Site'] = 'DOR'
@@ -104,7 +123,6 @@ def main():
                 st.success("Data uploaded and combined successfully!")
             else:
                 st.error("Please upload all three CSV files.")
-
 
     # Tab 2: Dashboard
     if 'data_uploaded' in st.session_state and st.session_state.data_uploaded:
@@ -204,7 +222,6 @@ def main():
 
             # Filters inside the Dashboard tab
             with st.container():
-                
 
                 # Creating four columns in one row
                 col1, col2, col3, col4 = st.columns(4)
@@ -238,7 +255,7 @@ def main():
             load_custom_css()
             # Insert a horizontal line
             st.markdown("---")
-           
+
             # Apply filters to the dataframe
             filtered_df = df.copy()
 
@@ -282,9 +299,8 @@ def main():
                         # Drop the index
                         return summary_df.reset_index(drop=True)
 
-
                     st.markdown(
-                    """
+                        """
                     <h3 style='font-size:20px; color: #164871; border-bottom: 1px solid #164871; padding-bottom: 3px;'>
                         Sales & Profit Overview
                     </h3>
@@ -318,9 +334,9 @@ def main():
                         summary_df = summary_df.sort_values(
                             by='Sales USD(M)', ascending=False)
                         return summary_df
-                    
+
                     st.markdown(
-                    """
+                        """
                     <h3 style='font-size:20px; color: #164871; border-bottom: 1px solid #164871; padding-bottom: 3px;'>
                         Sales Per Site
                     </h3>
@@ -330,7 +346,7 @@ def main():
                 # Viz 3: Sales Distribution per Site (Donut Chart)
                 with row1_col3:
                     st.markdown(
-                    """
+                        """
                     <h3 style='font-size:20px; color: #164871; border-bottom: 1px solid #164871; padding-bottom: 3px;'>
                         Sales Distribution per Site
                     </h3>
@@ -347,7 +363,8 @@ def main():
                         values='Sales USD',
                         names='Site',
                         hole=0.5,  # This makes it a donut chart
-                        color_discrete_sequence=['#AECDE7', '#7BA8CD', '#5480A5']
+                        color_discrete_sequence=[
+                            '#AECDE7', '#7BA8CD', '#5480A5']
                     )
                     fig.update_layout(
                         width=210,  # Reduce the width of the chart
@@ -395,9 +412,8 @@ def main():
                             by='Sales USD(M)', ascending=False).reset_index(drop=True)
                         return summary_df.head(5)
 
-                    
                     st.markdown(
-                    """
+                        """
                     <h3 style='font-size:20px; color: #164871; border-bottom: 1px solid #164871; padding-bottom: 3px;'>
                         Sales Per Market Segment (Top 5)
                     </h3>
@@ -432,9 +448,8 @@ def main():
                             by='Sales USD(M)', ascending=False).reset_index(drop=True)
                         return summary_df.head(5)
 
-                
                     st.markdown(
-                    """
+                        """
                     <h3 style='font-size:20px; color: #164871; border-bottom: 1px solid #164871; padding-bottom: 3px;'>
                         Per Sales Rep (Top 5)
                     </h3>
@@ -470,7 +485,7 @@ def main():
                         return summary_df.head(5)
 
                     st.markdown(
-                    """
+                        """
                     <h3 style='font-size:20px; color: #164871; border-bottom: 1px solid #164871; padding-bottom: 3px;'>
                         Per Customer Name (Top 5)
                     </h3>
@@ -522,9 +537,8 @@ def main():
                         sns.despine(left=True, bottom=True)
                         st.pyplot(plt)
 
-                   
                     st.markdown(
-                    """
+                        """
                     <h3 style='font-size:20px; color: #164871; border-bottom: 1px solid #164871; padding-bottom: 3px;'>
                         Sales per Month
                     </h3>
@@ -573,9 +587,8 @@ def main():
                         sns.despine(left=True, bottom=True)
                         st.pyplot(plt)
 
-                    
                     st.markdown(
-                    """
+                        """
                     <h3 style='font-size:20px; color: #164871; border-bottom: 1px solid #164871; padding-bottom: 3px;'>
                         Profit per Month
                     </h3>
@@ -630,20 +643,21 @@ def main():
                         st.pyplot(plt)
 
                     st.markdown(
-                    """
+                        """
                     <h3 style='font-size:20px; color: #164871; border-bottom: 1px solid #164871; padding-bottom: 3px;'>
                         Margin %
                     </h3>
                     """, unsafe_allow_html=True)
                     monthly_margin_viz(filtered_df)
     else:
-     st.markdown("<h5 style='color: #5480A5;'>Upload Files in the Tab: Load Your Data</h5>", unsafe_allow_html=True)
+        st.markdown(
+            "<h5 style='color: #5480A5;'>Upload Files in the Tab: Load Your Data</h5>", unsafe_allow_html=True)
+
     # Tab 3: AI Insights
     if 'data_uploaded' in st.session_state and st.session_state.data_uploaded:
         df = st.session_state.df
 
         with tabs[2]:
-            
 
             # Ensure that data is loaded
             if 'df' not in st.session_state:
@@ -772,20 +786,24 @@ def main():
                             'Profit USD'].sum()
                         best_market_segment = market_segment_profit.idxmax()
                         potential_market_segment = market_segment_profit.idxmin()
-                        
+
                     # Customer analysis
                     if not filtered_df.empty:
-                        customer_sales = filtered_df.groupby('Customer Name')['Sales USD'].sum()
+                        customer_sales = filtered_df.groupby('Customer Name')[
+                            'Sales USD'].sum()
                         best_customer = customer_sales.idxmax()  # Best Customer
-                        previous_customer_sales = previous_df.groupby('Customer Name')['Sales USD'].sum() if not previous_df.empty else pd.Series()
+                        previous_customer_sales = previous_df.groupby(
+                            'Customer Name')['Sales USD'].sum() if not previous_df.empty else pd.Series()
                         customer_changes = {cust: calculate_percentage_change(
                             customer_sales[cust], previous_customer_sales.get(cust, 0)) for cust in customer_sales.index}
 
                         # Ensure all values in customer_changes are numeric
-                        customer_changes = {cust: change for cust, change in customer_changes.items() if isinstance(change, (int, float))}
+                        customer_changes = {cust: change for cust, change in customer_changes.items(
+                        ) if isinstance(change, (int, float))}
 
                         if customer_changes:
-                            most_improved_customer = max(customer_changes, key=customer_changes.get)
+                            most_improved_customer = max(
+                                customer_changes, key=customer_changes.get)
 
                     # Sales representative analysis
                     if not filtered_df.empty:
@@ -816,11 +834,11 @@ def main():
 
                         "3. **Per Market Segment:**\n"
                         "   - **Best Performing Segment:** {} with Profit ${:,.0f} USD\n".format(best_market_segment, market_segment_profit.get(best_market_segment, 0)) +
-                        
+
                         "4. **Per Customer:**\n"
                         "   - **Best Customer:** {} with Sales ${:,.0f} USD\n".format(best_customer, customer_sales.get(best_customer, 0)) +
                         "   - **Most Improved Customer:** {} with an increase of ${:,.0f} USD\n\n".format(
-                        most_improved_customer, customer_changes.get(most_improved_customer, 'N/A')) +
+                            most_improved_customer, customer_changes.get(most_improved_customer, 'N/A')) +
 
 
                         "5. **Per Sales Representative:**\n"
@@ -858,6 +876,7 @@ def main():
                 return ""
 
             # AI Insights Section in Streamlit
+
             def display_ai_insights():
 
                 # Replace these column names with the correct ones if different
@@ -876,14 +895,14 @@ def main():
                     col1, col2 = st.columns(2)
 
                     with col1:
-                        
+
                         st.markdown(
-                        """
+                            """
                         <h3 style='font-size:20px; color: #164871; border-bottom: 1px solid #164871; padding-bottom: 3px; margin-bottom: 10px;'>
                             Select Filters for Current Period
                         </h3>
-                        """, unsafe_allow_html=True) 
-                        
+                        """, unsafe_allow_html=True)
+
                         date_col1, date_col2 = st.columns(2)
                         with date_col1:
                             start_date = st.date_input(
@@ -904,7 +923,7 @@ def main():
                     with col2:
 
                         st.markdown(
-                        """
+                            """
                         <h3 style='font-size:20px; color: #164871; border-bottom: 1px solid #164871; padding-bottom: 3px; margin-bottom: 10px;'>
                             Select Filters for Past Period to Compare
                         </h3>
@@ -933,7 +952,7 @@ def main():
                 # Process the form submission
                 if submit_button:
                     with st.spinner(text='In progress'):
-                    # Hardcoded query
+                        # Hardcoded query
                         user_query = "Analyze the sales trends from this dashboard."
 
                         ai_response = generate_ai_insights(
