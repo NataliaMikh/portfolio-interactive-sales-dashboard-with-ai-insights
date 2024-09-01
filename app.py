@@ -343,43 +343,37 @@ def main():
                     """, unsafe_allow_html=True)
                     st.dataframe(site_sales_profit_summary(filtered_df))
 
-                # Viz 3: Sales Distribution per Site (Donut Chart)
+                # Viz 3: Sales Distribution per Site (Horizontal Stacked Bar Chart)
                 with row1_col3:
-                    st.markdown(
-                        """
+                    st.markdown("""
                     <h3 style='font-size:20px; color: #164871; border-bottom: 1px solid #164871; padding-bottom: 3px;'>
                         Sales Distribution per Site
                     </h3>
                     """, unsafe_allow_html=True)
+
                     # Filter out only numeric columns before applying the groupby and sum operation
                     filtered_df_numeric = filtered_df[[
                         'Site', 'Sales USD']].copy()
                     filtered_df_numeric = filtered_df_numeric.groupby(
                         'Site').sum().reset_index()
 
-                    # Create Donut Chart with adjusted size and legend position
-                    fig = px.pie(
-                        filtered_df_numeric,
-                        values='Sales USD',
-                        names='Site',
-                        hole=0.5,  # This makes it a donut chart
-                        color_discrete_sequence=[
-                            '#AECDE7', '#7BA8CD', '#5480A5']
-                    )
-                    fig.update_layout(
-                        width=210,  # Reduce the width of the chart
-                        height=210,  # Reduce the height of the chart
-                        # Adjust margins to fit better
-                        margin=dict(l=0, r=0, t=0, b=0),
-                        legend=dict(
-                            orientation="v",  # Vertical legend
-                            y=0.5,  # Center vertically
-                            x=1.1,  # Position to the right of the chart
-                            xanchor='left',  # Align legend to the left
-                            yanchor='middle'  # Align legend to the middle
-                        )
-                    )
-                    st.plotly_chart(fig, use_container_width=False)
+                    # Creating a horizontal bar chart
+                    plt.figure(figsize=(8, 2.5))
+                    plt.barh(filtered_df_numeric['Site'], filtered_df_numeric['Sales USD'], color=[
+                             '#AECDE7', '#7BA8CD', '#5480A5'])
+                    for index, value in enumerate(filtered_df_numeric['Sales USD']):
+                        plt.text(value, index, '${:.1f}M'.format(
+                            value/1_000_000), va='center', color='white')
+
+                    # Hide the y-axis labels and ticks
+                    plt.gca().invert_yaxis()  # Display the largest sales at the top
+                    # Remove the border
+                    sns.despine(left=True, bottom=False)
+                    st.pyplot(plt)
+
+                    # Space reduction after the chart
+                    st.markdown(
+                        '<style>div.block-container{padding-bottom:0px;}</style>', unsafe_allow_html=True)
 
                 # ROW 2 with 2 Columns
 
