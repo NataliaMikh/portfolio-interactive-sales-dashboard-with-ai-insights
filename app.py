@@ -515,20 +515,20 @@ def main():
                         grouped_df = grouped_df.sort_values('Month')
 
                         # Plotting using Seaborn
-                        plt.figure(figsize=(10, 6))
+                        plt.figure(figsize=(8, 4))
                         ax = sns.barplot(
-                            data=grouped_df, x='Month', y='Sales USD', color="#8DA6BB")
+                            data=grouped_df, x='Month', y='Sales USD', color="#2E83CA")
 
-                        # Annotate the bars with values above the bars using the text() function
+                        # Annotate the bars with values inside the bars using the text() function
                         for i, value in enumerate(grouped_df['Sales USD']):
-                            plt.text(i, value + 0.02 * max(grouped_df['Sales USD']), f"{
-                                     value/1_000_000:.1f}M", ha='center', fontsize=12)
+                            ax.text(i, value - (0.05 * max(grouped_df['Sales USD'])), f"{value/1_000_000:.1f}M",
+                                    # Adjust text properties here
+                                    ha='center', va='top', color='white', fontsize=14, rotation=90)
 
                         # Hide the y-axis labels and ticks
                         ax.yaxis.set_visible(False)
-                        # Make the month labels bigger
-                        ax.set_xticklabels(
-                            ax.get_xticklabels(), fontsize=14)
+                        # Adjust the x-axis labels
+                        ax.set_xticklabels(ax.get_xticklabels(), fontsize=14)
 
                         # Remove the x-axis label "Month"
                         ax.set_xlabel('')
@@ -565,14 +565,15 @@ def main():
                         grouped_df = grouped_df.sort_values('Month')
 
                         # Plotting using Seaborn
-                        plt.figure(figsize=(10, 6))
+                        plt.figure(figsize=(8, 4))
                         ax = sns.barplot(
-                            data=grouped_df, x='Month', y='Profit USD', color="#346E9F")
+                            data=grouped_df, x='Month', y='Profit USD', color="#0D4F86")
 
                         # Annotate the bars with values above the bars using the text() function
                         for i, value in enumerate(grouped_df['Profit USD']):
-                            plt.text(i, value + 0.02 * max(grouped_df['Profit USD']), f"{
-                                     value/1_000_000:.1f}M", ha='center', fontsize=12)
+                            ax.text(i, value - 0.15 * max(grouped_df['Profit USD']),  # Adjust the multiplier as needed
+                                    f"{value/1_000_000:.1f}M", ha='center', va='center',
+                                    color='white', fontsize=14, rotation=90)
 
                         # Hide the y-axis labels and ticks
                         ax.yaxis.set_visible(False)
@@ -590,7 +591,7 @@ def main():
                     st.markdown(
                         """
                     <h3 style='font-size:20px; color: #164871; border-bottom: 1px solid #164871; padding-bottom: 3px;'>
-                        Profit per Month
+                        Gross Profit per Month
                     </h3>
                     """, unsafe_allow_html=True)
                     monthly_profit_viz(filtered_df)
@@ -620,14 +621,20 @@ def main():
                         grouped_df = grouped_df.sort_values('Month')
 
                         # Plotting using Seaborn
-                        plt.figure(figsize=(10, 6))
+                        plt.figure(figsize=(8, 4))
                         ax = sns.barplot(
-                            data=grouped_df, x='Month', y='Margin %', color="#549CD8")
+                            data=grouped_df, x='Month', y='Margin %', color="#1E3553")
 
                         # Annotate the bars with values above the bars using the text() function
+                        # Annotate the bars with values inside the bars using the text() function
                         for i, value in enumerate(grouped_df['Margin %']):
-                            plt.text(
-                                i, value + 0.02 * max(grouped_df['Margin %']), f"{value:.1f}%", ha='center', fontsize=12)
+                            ax.text(
+                                # Adjusting position to be slightly lower inside the bar
+                                i, value - 0.15 * max(grouped_df['Margin %']),
+                                # Adding vertical alignment
+                                f"{value:.1f}%", ha='center', va='center',
+                                # Adjusting for better visibility and rotation
+                                color='white', fontsize=14, rotation=90)
 
                         # Hide the y-axis labels and ticks
                         ax.yaxis.set_visible(False)
