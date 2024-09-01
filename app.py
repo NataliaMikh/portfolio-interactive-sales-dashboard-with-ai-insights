@@ -44,10 +44,10 @@ def main():
     # Create tabs
     tabs = st.tabs(["1.Load Your Data", "2.Dashboard", "3. Generate AI Insights"])
 
-    # Define default data paths
-    default_btn_path = 'default_Site-BTN_Sales_History.csv'
-    default_dor_path = 'default_Site-DOR_Sales_History.csv'
-    default_tor_path = 'default_Site-TOR_Sales_History.csv'
+    # Define default data paths using the raw versions
+    default_btn_path = 'https://raw.githubusercontent.com/NGravereaux/interactive-sales-dashboard-with-ai-insights/main/default_Site-BTN_Sales_History.CSV'
+    default_dor_path = 'https://raw.githubusercontent.com/NGravereaux/interactive-sales-dashboard-with-ai-insights/main/default_Site-DOR_Sales_History.CSV'
+    default_tor_path = 'https://raw.githubusercontent.com/NGravereaux/interactive-sales-dashboard-with-ai-insights/main/default_Site-TOR_Sales_History.CSV'
 
     # Load default data
     df_btn = pd.read_csv(default_btn_path, encoding='ISO-8859-1', low_memory=False)
