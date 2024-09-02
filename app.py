@@ -515,7 +515,7 @@ def main():
                             grouped_df = grouped_df.sort_values('Month')
 
                             # Plotting using Seaborn
-                            plt.figure(figsize=(4, 2), dpi=100)
+                            plt.figure(figsize=(6, 2), dpi=100)
                             ax = sns.barplot(data=grouped_df, x='Month',
                                              y='Sales USD', color="#2E83CA")
 
@@ -566,7 +566,7 @@ def main():
                             grouped_df = grouped_df.sort_values('Month')
 
                             # Plotting using Seaborn
-                            plt.figure(figsize=(4, 2), dpi=100)
+                            plt.figure(figsize=(6, 2), dpi=100)
                             ax = sns.barplot(data=grouped_df, x='Month',
                                              y='Profit USD', color="#0D4F86")
 
@@ -622,7 +622,7 @@ def main():
                             grouped_df = grouped_df.sort_values('Month')
 
                             # Plotting using Seaborn
-                            plt.figure(figsize=(4, 2), dpi=100)
+                            plt.figure(figsize=(6, 2), dpi=100)
                             ax = sns.barplot(data=grouped_df, x='Month',
                                              y='Margin %', color="#617DB4")
 
