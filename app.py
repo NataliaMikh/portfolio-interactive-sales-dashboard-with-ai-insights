@@ -876,7 +876,7 @@ def main():
                         return f"An error occurred: {e}"
                 return ""
 
-            # AI Insights Section in Streamlit
+            # AI Insights Section 
 
             def display_ai_insights():
 
