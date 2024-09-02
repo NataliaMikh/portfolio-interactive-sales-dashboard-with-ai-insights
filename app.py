@@ -514,7 +514,7 @@ def main():
                             grouped_df = grouped_df.sort_values('Month')
 
                             # Plotting using Seaborn
-                            plt.figure(figsize=(8, 4))
+                            plt.figure(figsize=(4, 2))
                             ax = sns.barplot(data=grouped_df, x='Month',
                                              y='Sales USD', color="#2E83CA")
 
@@ -522,13 +522,13 @@ def main():
                             for i, value in enumerate(grouped_df['Sales USD']):
                                 ax.text(i, value - (0.05 * max(grouped_df['Sales USD'])), f"{value/1_000_000:.1f}M",
                                         # Adjust text properties here
-                                        ha='center', va='top', color='white', fontsize=14, rotation=90)
+                                        ha='center', va='top', color='white', fontsize=8, rotation=90)
 
                             # Hide the y-axis labels and ticks
                             ax.yaxis.set_visible(False)
                             # Adjust the x-axis labels
                             for label in ax.get_xticklabels():
-                                label.set_fontsize(14)
+                                label.set_fontsize(8)
 
                             # Remove the x-axis label "Month"
                             ax.set_xlabel('')
@@ -565,7 +565,7 @@ def main():
                             grouped_df = grouped_df.sort_values('Month')
 
                             # Plotting using Seaborn
-                            plt.figure(figsize=(8, 4))
+                            plt.figure(figsize=(4, 2))
                             ax = sns.barplot(data=grouped_df, x='Month',
                                              y='Profit USD', color="#0D4F86")
 
@@ -573,16 +573,13 @@ def main():
                             for i, value in enumerate(grouped_df['Profit USD']):
                                 ax.text(i, value - 0.15 * max(grouped_df['Profit USD']),  # Adjust the multiplier as needed
                                         f"{value/1_000_000:.1f}M", ha='center', va='center',
-                                        color='white', fontsize=14, rotation=90)
+                                        color='white', fontsize=8, rotation=90)
 
                             # Hide the y-axis labels and ticks
                             ax.yaxis.set_visible(False)
-                            # Make the month labels bigger
-                            # Apply FixedLocator to control tick positions
-                            loc = ticker.FixedLocator(ax.get_xticks())
-                            ax.xaxis.set_major_locator(loc)
-                            ax.set_xticklabels(
-                                ax.get_xticklabels(), fontsize=14)
+                            # Adjust the x-axis labels
+                            for label in ax.get_xticklabels():
+                                label.set_fontsize(8)
 
                             # Remove the x-axis label "Month"
                             ax.set_xlabel('')
@@ -624,9 +621,9 @@ def main():
                             grouped_df = grouped_df.sort_values('Month')
 
                             # Plotting using Seaborn
-                            plt.figure(figsize=(8, 4))
+                            plt.figure(figsize=(4, 2))
                             ax = sns.barplot(data=grouped_df, x='Month',
-                                             y='Margin %', color="#1E3553")
+                                             y='Margin %', color="#617DB4")
 
                             # Annotate the bars with values above the bars using the text() function
                             # Annotate the bars with values inside the bars using the text() function
@@ -638,16 +635,13 @@ def main():
                                     # Adding vertical alignment
                                     f"{value:.1f}%", ha='center', va='center',
                                     # Adjusting for better visibility and rotation
-                                    color='white', fontsize=14, rotation=90)
+                                    color='white', fontsize=8, rotation=90)
 
                             # Hide the y-axis labels and ticks
                             ax.yaxis.set_visible(False)
-                            # Make the month labels bigger
-                            # Apply FixedLocator to control tick positions
-                            loc = ticker.FixedLocator(ax.get_xticks())
-                            ax.xaxis.set_major_locator(loc)
-                            ax.set_xticklabels(
-                                ax.get_xticklabels(), fontsize=14)
+                            # Adjust the x-axis labels
+                            for label in ax.get_xticklabels():
+                                label.set_fontsize(8)
 
                             # Remove the x-axis label "Month"
                             ax.set_xlabel('')
