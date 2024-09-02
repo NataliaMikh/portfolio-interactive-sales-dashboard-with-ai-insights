@@ -889,7 +889,7 @@ def main():
 
                         st.markdown(
                             """
-                        <h3 style='font-size:20px; color: #164871; border-bottom: 1px solid #164871; padding-bottom: 3px; margin-bottom: 10px;'>
+                        <h3 style='font-size:20px; color: #164871; border-bottom: 1px solid #164871; padding-bottom: 10px; margin-bottom: 10px;'>
                             Select Filters for Current Period
                         </h3>
                         """, unsafe_allow_html=True)
@@ -915,7 +915,7 @@ def main():
 
                         st.markdown(
                             """
-                        <h3 style='font-size:20px; color: #164871; border-bottom: 1px solid #164871; padding-bottom: 3px; margin-bottom: 10px;'>
+                        <h3 style='font-size:20px; color: #164871; border-bottom: 1px solid #164871; padding-bottom: 10px; margin-bottom: 10px;'>
                             Select Filters for Past Period to Compare
                         </h3>
                         """, unsafe_allow_html=True)
@@ -950,7 +950,27 @@ def main():
                             user_query, start_date, end_date, prev_start_date, prev_end_date,
                             market_segment_1, market_segment_2, sales_rep_1, sales_rep_2, customer_1, customer_2
                         )
-                        st.markdown(ai_response)
+
+                        # Reduce line spacing in the AI Insights output, including bullet points
+                        # Display the AI response with custom formatting
+                        st.markdown(f"""
+                            <div style='line-height:1.3;'>
+                                {ai_response}
+                            </div>
+                            <style>
+                                h4 {{
+                                    font-size: 4px;
+                                    margin-bottom: 2px;
+                                }}
+                                ul {{
+                                    margin-bottom: 1px;
+                                }}
+                                li {{
+                                    line-height: 1.2;
+                                    margin-bottom: 1px;
+                                }}
+                            </style>
+                            """, unsafe_allow_html=True)
             else:
                 st.warning(
                     "Data not loaded. Please upload data in the 'Load Updated Data' tab first.")
