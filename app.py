@@ -16,6 +16,13 @@ ssl._create_default_https_context = ssl._create_unverified_context
 # Setting the page configuration
 st.set_page_config(layout="wide")
 
+st.markdown("""
+<head>
+    <meta property="og:title" content="Your App Title">
+    <meta property="og:image" content="https://raw.githubusercontent.com/NGravereaux/interactive-sales-dashboard-with-ai-insights/main/tab2.png">
+</head>
+""", unsafe_allow_html=True)
+
 # Custom CSS for the application
 st.markdown("""
     <style>
@@ -89,7 +96,11 @@ def main():
 
     # Tab 0 for loading updated data
     with tabs[0]:
-        st.markdown("### Upload Sales History CSV Files")
+        st.markdown("""
+            <h3 style='font-size:20px; color: #164871; border-bottom: 1px solid #164871; padding-bottom: 10px; margin-bottom: 10px;'>
+            Upload Sales History CSV Files
+            </h3>
+            """, unsafe_allow_html=True)
 
         # Display file uploaders in one line
         col1, col2, col3 = st.columns(3)
