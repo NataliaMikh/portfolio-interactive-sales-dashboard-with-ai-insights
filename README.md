@@ -25,7 +25,7 @@ Allows users to upload up-to-date sales data.
 ![Read the README file on GitHub](https://github.com/NGravereaux/interactive-sales-dashboard-with-ai-insights/blob/main/tab1.png)
 
 **🗌 Tab 2: “Dashboard”**
-Displays a dashboard equipped with filters to provide interactivit
+Displays a dashboard equipped with filters to provide interactivity
 ![Read the README file on GitHub](https://github.com/NGravereaux/interactive-sales-dashboard-with-ai-insights/blob/main/tab2.png)
 
 **🗌 Tab 3: “Generate AI insights”**
