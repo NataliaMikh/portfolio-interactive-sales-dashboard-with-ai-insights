@@ -352,33 +352,34 @@ def main():
                             'Site').sum().reset_index()
 
                         # Creating a horizontal bar chart
-                        fig, ax = plt.subplots(figsize=(8, 2.5), dpi=100)
+                        # Creating a horizontal bar chart
+                        # Creating a horizontal bar chart
+                        fig, ax = plt.subplots(figsize=(6, 1.5), dpi=100)
                         ax.barh(filtered_df_numeric['Site'], filtered_df_numeric['Sales USD'], color=[
                                 '#AECDE7', '#7BA8CD', '#5480A5'])
 
-                        # Adding text labels
+                        # Adding text labels inside the bars
                         for index, value in enumerate(filtered_df_numeric['Sales USD']):
-                            ax.text(value, index, '${:.1f}M'.format(
-                                value / 1_000_000), va='center', color='white')
+                            ax.text(value * 0.95, index, '${:,.0f}'.format(
+                                value), va='center', ha='right', color='black', fontsize=6)
 
-                        # Hide the y-axis labels and ticks
-                        ax.invert_yaxis()  # Display the largest sales at the top
+                        # Invert y-axis to have the largest value at the top
+                        ax.invert_yaxis()
 
-                        # Instead of manually setting, adjust the tick labels directly
-                        for label in ax.get_xticklabels():
-                            label.set_fontsize(14)
+                        # Remove the x-axis labels and ticks
+                        ax.xaxis.set_visible(False)
 
-                        # Remove the border
-                        sns.despine(ax=ax, left=True, bottom=False)
+                        # Remove the border on the left and bottom sides
+                        sns.despine(ax=ax, left=True, bottom=True)
 
                         # Display the plot in Streamlit
                         st.pyplot(fig)
 
-                        # Space reduction after the chart
-                        st.markdown(
-                            '<style>div.block-container{padding-bottom:0px;}</style>',
-                            unsafe_allow_html=True
-                        )
+                    # Space reduction after the chart
+                    st.markdown(
+                        '<style>div.block-container{padding-bottom:0px;}</style>',
+                        unsafe_allow_html=True
+                    )
 
                     # ROW 2 with 2 Columns
                     row2_col1, row2_col2, row2_col3 = st.columns(3)
@@ -514,7 +515,7 @@ def main():
                             grouped_df = grouped_df.sort_values('Month')
 
                             # Plotting using Seaborn
-                            plt.figure(figsize=(4, 2))
+                            plt.figure(figsize=(4, 2), dpi=100)
                             ax = sns.barplot(data=grouped_df, x='Month',
                                              y='Sales USD', color="#2E83CA")
 
@@ -565,7 +566,7 @@ def main():
                             grouped_df = grouped_df.sort_values('Month')
 
                             # Plotting using Seaborn
-                            plt.figure(figsize=(4, 2))
+                            plt.figure(figsize=(4, 2), dpi=100)
                             ax = sns.barplot(data=grouped_df, x='Month',
                                              y='Profit USD', color="#0D4F86")
 
@@ -621,7 +622,7 @@ def main():
                             grouped_df = grouped_df.sort_values('Month')
 
                             # Plotting using Seaborn
-                            plt.figure(figsize=(4, 2))
+                            plt.figure(figsize=(4, 2), dpi=100)
                             ax = sns.barplot(data=grouped_df, x='Month',
                                              y='Margin %', color="#617DB4")
 
