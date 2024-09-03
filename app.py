@@ -365,14 +365,14 @@ def main():
                         # Creating a horizontal bar chart
                         # Creating a horizontal bar chart
                         # Creating a horizontal bar chart
-                        fig, ax = plt.subplots(figsize=(6, 1.5), dpi=100)
+                        fig, ax = plt.subplots(figsize=(9, 3), dpi=100)
                         ax.barh(filtered_df_numeric['Site'], filtered_df_numeric['Sales USD'], color=[
                                 '#AECDE7', '#7BA8CD', '#5480A5'])
 
                         # Adding text labels inside the bars
                         for index, value in enumerate(filtered_df_numeric['Sales USD']):
                             ax.text(value * 0.95, index, '${:,.0f}'.format(
-                                value), va='center', ha='right', color='black', fontsize=6)
+                                value), va='center', ha='right', color='black', fontsize=13)
 
                         # Invert y-axis to have the largest value at the top
                         ax.invert_yaxis()
@@ -388,7 +388,7 @@ def main():
 
                     # Space reduction after the chart
                     st.markdown(
-                        '<style>div.block-container{padding-bottom:0px;}</style>',
+                        '<style>div.block-container{padding-bottom:0px;margin-bottom:0px;}</style>',
                         unsafe_allow_html=True
                     )
 
