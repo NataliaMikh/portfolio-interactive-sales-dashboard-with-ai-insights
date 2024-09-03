@@ -57,9 +57,9 @@ st.markdown('<div class="fixed-title">Sales Analytics Dashboard</div>',
 def load_data(uploaded_files):
     # Default paths
     paths = {
-        'BTN': 'https://raw.githubusercontent.com/NGravereaux/interactive-sales-dashboard-with-ai-insights/main/default_Site-BTN_Sales_History.CSV',
-        'DOR': 'https://raw.githubusercontent.com/NGravereaux/interactive-sales-dashboard-with-ai-insights/main/default_Site-DOR_Sales_History.CSV',
-        'TOR': 'https://raw.githubusercontent.com/NGravereaux/interactive-sales-dashboard-with-ai-insights/main/default_Site-TOR_Sales_History.CSV'
+        'site1': 'https://raw.githubusercontent.com/NGravereaux/interactive-sales-dashboard-with-ai-insights/main/default_site1_sales_history.csv',
+        'site2': 'https://raw.githubusercontent.com/NGravereaux/interactive-sales-dashboard-with-ai-insights/main/default_site2_sales_history.csv',
+        'site3': 'https://raw.githubusercontent.com/NGravereaux/interactive-sales-dashboard-with-ai-insights/main/default_site3_sales_history.csv'
     }
 
     # Function to read CSV from either a file or URL
@@ -105,19 +105,19 @@ def main():
         # Display file uploaders in one line
         col1, col2, col3 = st.columns(3)
         with col1:
-            uploaded_btn = st.file_uploader(
-                "Upload Site-BTN CSV", type="csv", key="btn_upload")
+            uploaded_site1 = st.file_uploader(
+                "Upload Site1 (BTN) CSV", type="csv", key="site1_upload")
         with col2:
-            uploaded_dor = st.file_uploader(
-                "Upload Site-DOR CSV", type="csv", key="dor_upload")
+            uploaded_site2 = st.file_uploader(
+                "Upload Site2 (DOR) CSV", type="csv", key="site2_upload")
         with col3:
-            uploaded_tor = st.file_uploader(
-                "Upload Site-TOR CSV", type="csv", key="tor_upload")
+            uploaded_site3 = st.file_uploader(
+                "Upload Site3 (TOR) CSV", type="csv", key="site3_upload")
 
         uploaded_files = {
-            'BTN': uploaded_btn,
-            'DOR': uploaded_dor,
-            'TOR': uploaded_tor
+            'site1': uploaded_site1,
+            'site2': uploaded_site2,
+            'site3': uploaded_site3
         }
 
         if st.button("Submit"):
